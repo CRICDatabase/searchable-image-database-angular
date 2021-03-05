@@ -70,14 +70,14 @@ function exibirClassificacoes(classificacoes, indice = -1, draw_label) {
     ctx.fillRect(  // places its top-left corner at (10, 10), and gives it a size of 10 units wide by 100 tall
         10,
         10,
-        100,
+        300,
         10
     );
     ctx.font = '24px serif';
     ctx.textAlign="center";
     ctx.fillText(
-        "1mm",
-        10 + (100 / 2),  // mid of scale bar
+        "2 inch",
+        10 + (300 / 2),  // mid of scale bar
         10 + 10 + 24  // bellow scale bar
     );
 
