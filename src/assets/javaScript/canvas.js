@@ -64,6 +64,23 @@ function exibirClassificacoes(classificacoes, indice = -1, draw_label) {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Add scale to canvas
+    // TODO: Get scale from database
+    ctx.fillStyle = 'black';
+    ctx.fillRect(  // places its top-left corner at (10, 10), and gives it a size of 10 units wide by 100 tall
+        10,
+        10,
+        100,
+        10
+    );
+    ctx.font = '24px serif';
+    ctx.textAlign="center";
+    ctx.fillText(
+        "1mm",
+        10 + (100 / 2),  // mid of scale bar
+        10 + 10 + 24  // bellow scale bar
+    );
+
     const largura = 100;
     const altura = 100;
 
