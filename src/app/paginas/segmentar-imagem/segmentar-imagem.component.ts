@@ -1,5 +1,5 @@
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 
 import { Subscription } from "rxjs";
 
@@ -25,6 +25,7 @@ declare const segmentos: any; // Função javascript
 declare const initCanvas: any; // Função javascript
 declare const limparVetorSegmentos: any; // Função javascript
 declare const exibirSegmentacoes: any; // Função javascript
+declare const canvas2file: any; // Função Canvas
 
 @Component({
     selector: "cr-segmentar-imagem",
@@ -48,6 +49,7 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
         "name": `CRIC Cervix Segmentation #undefined`
     };
 
+    @ViewChild("delete_image_modal_close", { static: true }) modal_close: any;
     private SegmentacaoHelper: SegmentacaoHelper;
     private armazenamentoBrowser: ArmazenamentoBrowser;
     private cadastrarSegmentacaoSubscription: Subscription;
@@ -76,7 +78,7 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
     public vetorSelecaoDescricao: Array<IDescricaoModelResultado[]>;
     public playground: boolean;
 
-    constructor(private imagemService: ImagemService, private activatedRoute: ActivatedRoute) {
+    constructor(private imagemService: ImagemService, private activatedRoute: ActivatedRoute, private router: Router) {
         this.playground = environment.playground === "true";
         this.comunicacaoApi = new ComunicacaoApi();
         this.armazenamentoBrowser = new ArmazenamentoBrowser();
@@ -166,6 +168,45 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
                         break;
                     }
                     }
+                }
+            );
+    }
+
+    delete_image() {
+        this.carregando = true;
+        
+        this.imagemService.delete_image(this.id_imagem)
+            .subscribe(
+                () => {
+                    this.carregando = false;
+                    this.modal_close.nativeElement.click();
+
+                    this.router.navigate(
+                        [
+                            "/segmentation/"
+                        ]
+                    );
+                },
+                (err) => {
+                    switch(err.status) {
+
+                    case HttpStatusCode.UNAUTHORIZED:
+                    case HttpStatusCode.BAD_REQUEST:
+                    case HttpStatusCode.NOT_FOUND:
+                    case HttpStatusCode.FORBIDDEN:
+                    case HttpStatusCode.INTERNAL_SERVER_ERROR: {
+                        console.log(err.message);
+                        break;
+                    }
+
+                    default: {
+                        console.log(err);
+                        break;
+                    }
+                    }
+
+                    this.carregando = false;
+                    this.modal_close.nativeElement.click();
                 }
             );
     }
@@ -501,9 +542,105 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
         exibirSegmentacoes(this.todasSegmentacoes, this.indiceSelecionado, this.rotulo);
     }
 
-    save_image() {}
+    save_image() {
+        canvas2file(`cric_${this.id_imagem}.png`);  /* see canvas.js */
+    }
 
-    save_json() {}
+    save_json() {
 
-    save_csv() {}
+        var segmentations_array = [];
+        
+        segmentations_array.push({
+            image_id: this.imagem.id,
+            image_doi: this.imagem.doi,
+            image_name: this.imagem.nome,
+            cells: this.todasSegmentacoes.celulas.map(
+                (item) => {
+                    return {
+                        cell_id: item.id,
+                        description_id: item.descricao.id,
+                        cell_name: item.descricao.nome,
+                        cell_code: item.descricao.codigo,
+                        cytoplasm_segmentation: item.segmentos_citoplasma.map(
+                            (cyto_cord) => {
+                                return {
+                                    coord_x: cyto_cord.coord_x,
+                                    coord_y: cyto_cord.coord_y
+                                }
+                            }
+                        ),
+                        nucleus_segmentation: item.segmentos_nucleo.map(
+                            (nucle_cord) => {
+                                return {
+                                    coord_x: nucle_cord.coord_x,
+                                    coord_y: nucle_cord.coord_y
+                                }
+                            }
+                        ),
+                    };
+                }
+            )
+        });
+
+        this.save_file(
+            JSON.stringify(segmentations_array),
+            `cric_${this.id_imagem}_segmentation.json`
+        );
+    }
+
+
+    save_csv() {
+        var segmentation_cytoplasm_csv_string = "image_id,image_doi,image_filename,cell_id,description_id,cell_name,cell_code,cytoplasm_segmentation_x,cytoplasm_segmentation_y,cytoplasm_segmentation_x,cytoplasm_segmentation_y,...\n";
+        var segmentation_nucleus_csv_string = "image_id,image_doi,image_filename,cell_id,description_id,cell_name,cell_code,nucleus_segmentation_x,nucleus_segmentation_y,nucleus_segmentation_x,nucleus_segmentation_y,...\n";
+        var segmentation_CSV = segmentation_cytoplasm_csv_string + segmentation_nucleus_csv_string;
+        var initial = `${this.imagem.id},${this.imagem.doi},${this.imagem.nome},`;
+
+        for(let i=0; i<this.todasSegmentacoes.celulas.length; i++){
+            let cytoplasm_line;
+            let nucleus_line;
+            this.todasSegmentacoes.celulas.forEach(
+                (item) => {
+                    cytoplasm_line = initial + `${item.id},${item.descricao.id},${item.descricao.nome},${item.descricao.codigo},` + item.segmentos_citoplasma.map(
+                        (cyto_cord) => {
+                            return `${cyto_cord.coord_x},${cyto_cord.coord_y}`
+                        }
+                    ) + "\n";
+
+                    nucleus_line = initial + `${item.id},${item.descricao.id},${item.descricao.nome},${item.descricao.codigo},` + item.segmentos_nucleo.map(
+                        (nucle_cord) => {
+                            return `${nucle_cord.coord_x},${nucle_cord.coord_y}`
+                        }
+                    ) + "\n";
+                    
+                    segmentation_CSV = segmentation_CSV + cytoplasm_line + nucleus_line;
+                }
+            );
+        }
+
+        this.save_file(
+            segmentation_CSV,
+            `cric_${this.id_imagem}_segmentation.csv`
+        );
+    }
+
+    
+    save_file(data, filename) {
+
+        var file_a = document.createElement('a');
+        file_a.setAttribute(
+            'href',
+            'data:text/plain;charset=utf-8,' + encodeURIComponent(data)
+        );
+        file_a.setAttribute(
+            'download',
+            filename
+        );
+
+        file_a.style.display = 'none';
+        document.body.appendChild(file_a);
+
+        file_a.click();
+
+        document.body.removeChild(file_a);
+    }
 }

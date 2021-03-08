@@ -24,7 +24,6 @@
 
             <button class="btn btn-primary collapsed"
                     title="Download augmented image"
-                    disabled
                     (click)="save_image()">
                 <svg width="1em"
                         height="1em"
@@ -42,7 +41,6 @@
 
             <button class="btn btn-primary collapsed"
                     title="Download all classifications as JSON"
-                    disabled
                     (click)="save_json()">
                 <svg width="1em"
                         height="1em"
@@ -59,7 +57,6 @@
 
             <button class="btn btn-primary collapsed"
                     title="Download all classifications as CSV"
-                    disabled
                     (click)="save_csv()">
                 <svg width="1em"
                         height="1em"
@@ -73,6 +70,22 @@
                             d="M13 6H3V5h10v1zm0 3H3V8h10v1zm0 3H3v-1h10v1z" />
                     <path fill-rule="evenodd"
                             d="M5 14V6h1v8H5zm4 0V6h1v8H9z" />
+                </svg>
+            </button>
+
+            <button class="btn btn-danger collapsed"
+                    data-toggle="modal"
+                    data-target="#delete-image-modal"
+                    *ngIf="objetoSessao"
+                    title="Delete image">
+                <svg width="1em"
+                        height="1em"
+                        viewBox="0 0 16 16"
+                        class="bi bi-trash-fill"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                            d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />
                 </svg>
             </button>
         </div>
@@ -385,7 +398,52 @@
                         Save Segmentation data set
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Modal -->
+<div class="modal fade"
+        id="delete-image-modal"
+        data-backdrop="static"
+        data-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="Delete Image Confirmation"
+        aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"
+                        id="staticBackdropLabel">Delete Image</h5>
+                <button type="button"
+                        #delete_image_modal_close
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure that you want to delete image with id {{ imagem?.id }}?
+                You won't be able to revert this!
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-danger"
+                        (click)="delete_image()"
+                        [disabled]="carregando">
+                    <span *ngIf="!carregando">
+                        Delete image
+                    </span>
+                    <span *ngIf="carregando">
+                        Deleting image
+                    </span>
+                    <span *ngIf="carregando"
+                            class="spinner-border spinner-border-sm"
+                            role="status"
+                            aria-hidden="true"></span>
+                </button>
             </div>
         </div>
     </div>
