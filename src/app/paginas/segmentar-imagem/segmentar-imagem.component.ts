@@ -420,7 +420,7 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
                 .subscribe(
                     (retorno) => {
                         this.todasSegmentacoes = retorno;
-                        this.limparTodasSegmentacoes();
+                        this.listarTodasSegmentacoesDeDeCelula(this.id_imagem, this.objetoSessao.id_usuario);
                         this.indiceSelecionado = -1;
                         exibirSegmentacoes(this.todasSegmentacoes, this.indiceSelecionado, this.rotulo);
                         this.carregando = false;
