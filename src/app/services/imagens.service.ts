@@ -239,7 +239,6 @@ export class ImagemService {
 
         this.inicializarServicos();
         const url = `${this.api.obterUrlBaseApi()}/api/v1/imagens/${id_imagem}/classificacao-celula/${id_classificacao}`;
-
         return this.httpClient.put<IImagemModelResultado>(url, body, {
             headers: this.headerApplicationJson
         });
