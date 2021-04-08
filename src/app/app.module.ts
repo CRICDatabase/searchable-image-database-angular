@@ -32,6 +32,7 @@ import { LoginComponent } from "./components/login/login.component";
 
 import { UserHomeComponent } from './user/home/user-home.component';
 import { UserClassificationDatabaseComponent } from './user/classfication-database/user-classification-database.component';
+import { UserSegmentationDatabaseComponent } from './user/segmentation-database/user-segmentation-database.component';
 
 import { AdminHomeComponent } from './admin/home/admin-home.component';
 import { AdminUserComponent } from './admin/user/admin-user.component';
@@ -74,6 +75,7 @@ import { AdminInjuryComponent } from './admin/injury/admin-injury.component';
         AdminHomeComponent,
         UserHomeComponent,
         UserClassificationDatabaseComponent,
+        UserSegmentationDatabaseComponent,
         UserNavComponent,
         AdminInjuryComponent
     ],

@@ -595,27 +595,26 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
         var segmentation_CSV = segmentation_cytoplasm_csv_string + segmentation_nucleus_csv_string;
         var initial = `${this.imagem.id},${this.imagem.doi},${this.imagem.nome},`;
 
-        for(let i=0; i<this.todasSegmentacoes.celulas.length; i++){
-            let cytoplasm_line;
-            let nucleus_line;
-            this.todasSegmentacoes.celulas.forEach(
-                (item) => {
-                    cytoplasm_line = initial + `${item.id},${item.descricao.id},${item.descricao.nome},${item.descricao.codigo},` + item.segmentos_citoplasma.map(
-                        (cyto_cord) => {
-                            return `${cyto_cord.coord_x},${cyto_cord.coord_y}`
-                        }
-                    ) + "\n";
+        let cytoplasm_line;
+        let nucleus_line;
 
-                    nucleus_line = initial + `${item.id},${item.descricao.id},${item.descricao.nome},${item.descricao.codigo},` + item.segmentos_nucleo.map(
-                        (nucle_cord) => {
-                            return `${nucle_cord.coord_x},${nucle_cord.coord_y}`
-                        }
-                    ) + "\n";
-                    
-                    segmentation_CSV = segmentation_CSV + cytoplasm_line + nucleus_line;
-                }
-            );
-        }
+        this.todasSegmentacoes.celulas.forEach(
+            (item) => {
+                cytoplasm_line = initial + `${item.id},${item.descricao.id},${item.descricao.nome},${item.descricao.codigo},` + item.segmentos_citoplasma.map(
+                    (cyto_cord) => {
+                        return `${cyto_cord.coord_x},${cyto_cord.coord_y}`
+                    }
+                ) + "\n";
+
+                nucleus_line = initial + `${item.id},${item.descricao.id},${item.descricao.nome},${item.descricao.codigo},` + item.segmentos_nucleo.map(
+                    (nucle_cord) => {
+                        return `${nucle_cord.coord_x},${nucle_cord.coord_y}`
+                    }
+                ) + "\n";
+                
+                segmentation_CSV = segmentation_CSV + cytoplasm_line + nucleus_line;
+            }
+        );
 
         this.save_file(
             segmentation_CSV,

@@ -76,7 +76,7 @@
             <button class="btn btn-danger collapsed"
                     data-toggle="modal"
                     data-target="#delete-image-modal"
-                    *ngIf="objetoSessao"
+                    *ngIf="objetoSessao && objetoSessao.admin"
                     title="Delete image">
                 <svg width="1em"
                         height="1em"
@@ -161,14 +161,6 @@
 
                 <p><span> Description name: </span>
                     {{descricao.nome}}
-                </p>
-
-                <p><span> Description code: </span>
-                    {{descricao.codigo}}
-                </p>
-
-                <p><span> Description details: </span>
-                    {{descricao.detalhes}}
                 </p>
 
                 <div *ngIf="objetoSessao"

@@ -1,0 +1,22 @@
+<ngx-json-ld [json]="schema"></ngx-json-ld>
+
+<cr-animacao-carregamento *ngIf="carregando"></cr-animacao-carregamento>
+
+<div class="container">
+    <cr-user-nav [heading]="'Your Private Segmentation Collection'"></cr-user-nav>
+
+    <p>
+        Click the image
+        to zoom
+        and
+        have access to cell segmentation.
+        Each image has annotations for some cells.
+    </p>
+
+    <cr-listar-cards-imagem [todasImagens]="todasImagens"
+            [segmentationDatabase]="segmentationDatabase"
+            [carregando]="carregando"
+            #atualizarPaginacaoViewChild>
+    </cr-listar-cards-imagem>
+
+</div>
