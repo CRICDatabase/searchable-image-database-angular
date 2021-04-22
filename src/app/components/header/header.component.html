@@ -35,6 +35,11 @@
                                 [routerLink]="['/image/upload']">Upload</a>
                     </li>
                     <li *ngIf="usuarioAutenticado"
+                            class="nav-item">
+                        <a class="nav-link"
+                                [routerLink]="['/user']">Your Collection</a>
+                    </li>
+                    <li *ngIf="usuarioAutenticado"
                             class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"
                                 href="#"
@@ -88,29 +93,10 @@
                         Login
                     </a>
                 </li>
-                <li *ngIf="usuarioAutenticado && objetoSessao && !objetoSessao.admin"
-                        class="nav-item">
-                    <a [routerLink]="['/user']"
-                            class="nav-link">Account</a>
-                </li>
                 <li *ngIf="usuarioAutenticado && objetoSessao && objetoSessao.admin"
-                        class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle"
-                            href="#"
-                            id="AccountDropdown"
-                            role="button"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false">
-                        Account
-                    </a>
-                    <div class="dropdown-menu"
-                            aria-labelledby="AccountDropdown">
-                        <a [routerLink]="['/user']"
-                                class="dropdown-item">User</a>
-                        <a [routerLink]="['/admin']"
-                                class="dropdown-item">Admin</a>
-                    </div>
+                        class="nav-item">
+                    <a class="nav-link "
+                            [routerLink]="['/admin']">Admin</a>
                 </li>
                 <li *ngIf="usuarioAutenticado"
                         class="nav-item">

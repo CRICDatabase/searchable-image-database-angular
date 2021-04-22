@@ -74,7 +74,7 @@
             </button>
 
             <button class="btn btn-primary collapsed"
-                    *ngIf="objetoSessao"
+                    *ngIf="objetoSessao && objetoSessao.admin"
                     [title]="imagem?.classificacao_aprovada ? 'Unapprove image' : 'Approve image'"
                     (click)="toggle_approve_image()">
                 <!-- Bootstrap award fill icon -->
@@ -104,7 +104,7 @@
             <button class="btn btn-danger collapsed"
                     data-toggle="modal"
                     data-target="#delete-image-modal"
-                    *ngIf="objetoSessao && objetoSessao.admin"
+                    *ngIf="objetoSessao && imagem && ((imagem_autor_id == objetoSessao.id_usuario) || objetoSessao.admin)"
                     title="Delete image">
                 <svg width="1em"
                         height="1em"
@@ -208,9 +208,11 @@
                             Federal University of Ouro Preto
                         </dd>
                         -->
-
+                        
+                        <!--
                         <dt>ID</dt>
                         <dd>{{todasClassificacoes[indiceSelecionado]?.id}}</dd>
+                        -->
 
                         <dt>Lesion</dt>
                         <dd>{{todasClassificacoes[indiceSelecionado]?.lesao?.nome}}</dd>

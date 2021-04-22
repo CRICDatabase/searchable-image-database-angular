@@ -5,6 +5,10 @@ import { Subscription } from "rxjs";
 
 import { HttpStatusCode } from "src/app/utils/tratamento_erro/Http_Status_Code";
 
+import { ArmazenamentoBrowser } from "src/app/utils/browser_storage/browser_storage";
+import { ChavesArmazenamentoBrowser } from "src/app/utils/chaves_armazenamento_browser";
+import { IObjetoSessaoModel } from "src/app/models/autenticacao/objeto_sessao.model";
+
 import { ICelulaClassificadaModelResultado } from "src/app/models/classificacao/celula_classificada.model";
 import { IImagemModelResultado } from "src/app/models/imagem/imagem.model";
 import { ILesaoModelResultado } from "src/app/models/imagem/lesao.model";
@@ -30,6 +34,8 @@ export class ListarCardsImagemComponent implements OnInit, OnDestroy, AfterConte
     @Input() segmentationDatabase = false;
     @Input() classificationDatabase = false;
     @Input() carregando: boolean;
+    private armazenamentoBrowser: ArmazenamentoBrowser;
+    public objetoSessao: IObjetoSessaoModel;
     public Imagem: IImagemModelResultado;
     private paginaSelecionada: number;
     private limiteInferiorIndice: number;
@@ -65,6 +71,8 @@ export class ListarCardsImagemComponent implements OnInit, OnDestroy, AfterConte
     }
 
     ngOnInit() {
+        this.armazenamentoBrowser = new ArmazenamentoBrowser();
+        this.objetoSessao = JSON.parse(this.armazenamentoBrowser.obterDadoSessao(ChavesArmazenamentoBrowser.CHAVE_USUARIO_LOGADO));
         this.listarTodasLesoes();
     }
 

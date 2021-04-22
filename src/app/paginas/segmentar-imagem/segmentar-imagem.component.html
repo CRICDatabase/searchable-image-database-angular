@@ -76,7 +76,7 @@
             <button class="btn btn-danger collapsed"
                     data-toggle="modal"
                     data-target="#delete-image-modal"
-                    *ngIf="objetoSessao && objetoSessao.admin"
+                    *ngIf="objetoSessao && imagem && ((imagem_autor_id == objetoSessao.id_usuario) || objetoSessao.admin)"
                     title="Delete image">
                 <svg width="1em"
                         height="1em"
@@ -91,8 +91,18 @@
         </div>
 
         <div class="col-sm-12 col-md-8 col-lg-9">
-            <h5>Segmentation <span class="beta">Beta</span></h5>
+            <button class="btn btn-primary collapsed"
+                    (click)="toggle_augmentation()">
+                {{ draw_augmentation ? 'Disable augmention' : 'Enable augmention' }}
+            </button>
+
+            <button class="btn btn-primary collapsed"
+                    (click)="toggle_label()"
+                    [disabled]="!draw_augmentation">
+                {{ draw_label ? 'Disable label' : 'Enable label' }}
+            </button>
         </div>
+
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-4 col-lg-3"
@@ -143,10 +153,10 @@
                 <button id="label-button"
                         type="submit"
                         class="btn btn-block"
-                        [ngClass]="rotulo?'btn-primary':'btn-secondary'"
+                        [ngClass]="draw_label?'btn-primary':'btn-secondary'"
                         [disabled]="indiceSelecionado!=-1"
-                        (click)="dasabilitarRotulo()">
-                    {{rotulo ? 'Disable label' : 'Enable label'}}
+                        (click)="toggle_label()">
+                    {{draw_label ? 'Disable label' : 'Enable label'}}
                 </button>
             </div>
 
@@ -155,9 +165,12 @@
                     class="box_info">
 
                 <h5> Segmentation information </h5>
+
+                <!--
                 <p><span> Description Id:</span>
                     {{descricao.id}}
                 </p>
+                -->
 
                 <p><span> Description name: </span>
                     {{descricao.nome}}

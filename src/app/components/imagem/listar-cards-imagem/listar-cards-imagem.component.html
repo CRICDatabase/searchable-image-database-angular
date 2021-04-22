@@ -1,7 +1,9 @@
 <div class="form-inline">
-    <label class="sr-only"
+    <label *ngIf="objetoSessao.admin"
+            class="sr-only"
             for="ID-filter">Image slide</label>
     <input type="text"
+            *ngIf="objetoSessao.admin"
             class="form-control mb-2 mr-sm-2"
             id="ID-filter"
             [(ngModel)]="filter_slide"
@@ -115,8 +117,8 @@
             </div>
             <div class="card-body">
                 <dl>
-                    <dt>Slide</dt>
-                    <dd>{{imagem?.codigo_lamina}}</dd>
+                    <dt *ngIf="objetoSessao.admin">Slide</dt>
+                    <dd *ngIf="objetoSessao.admin">{{imagem?.codigo_lamina}}</dd>
 
                     <dt>Lesion</dt>
                     <dd>{{imagem?.lesao?.nome}}</dd>
