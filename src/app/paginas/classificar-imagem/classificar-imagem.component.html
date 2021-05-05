@@ -10,7 +10,7 @@
         <div class="col-sm-12 col-md-4 col-lg-3">
             <a class="btn btn-primary collapsed"
                     title="Back to collection"
-                    [routerLink]="['/classification']">
+                    href="javascript: history.go(-1)">
                 <svg width="1em"
                         height="1em"
                         viewBox="0 0 16 16"
@@ -160,6 +160,15 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
+            <div class="classification_info">
+                <h5> Support </h5>
+                <dl>
+                    <dt>Advise</dt>
+                    <dd>Click with the left mouse button on the region you want and then fill in all the information regarding the classification according to the Bethesda system.</dd>
+                </dl>
+            </div>
+
             <cr-image-info [image]="imagem"></cr-image-info>
 
             <div class="box_filter">

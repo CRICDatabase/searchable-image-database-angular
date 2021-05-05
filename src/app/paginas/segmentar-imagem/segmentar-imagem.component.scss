@@ -6,6 +6,7 @@ h5 {
     }
 }
 
+.segmentation_info,
 .image_info,
 .box_filter,
 .box_info {
@@ -26,6 +27,15 @@ h5 {
         &::after {
             content: ": ";
             white-space: pre;
+        }
+    }
+
+    dd {
+
+        &::after {
+            content: "";
+            clear: both;
+            display: block;
         }
     }
 

@@ -206,11 +206,11 @@ export class ImagemService {
     }
 
     approve_image(id_imagem: number): Observable<IImagemModelResultado> {
-
+        
         this.inicializarServicos();
         const url = `${this.api.obterUrlBaseApi()}/api/v1/imagens/${id_imagem}/aprovada`;
 
-        return this.httpClient.post<IImagemModelResultado>(url, {
+        return this.httpClient.delete<IImagemModelResultado>(url, {
             headers: this.headerApplicationJson
         });
     }

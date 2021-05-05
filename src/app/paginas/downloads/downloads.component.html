@@ -72,15 +72,16 @@
             </label>
         </div>
 
-      <div *ngIf="objetoSessao" class="form-check">
-        <input class="form-check-input" type="checkbox" value=""
-               id="segmentations_checkbox"
-               [(ngModel)]="download_segmentations"
-               [ngModelOptions]="{standalone: true}">
-        <label class="form-check-label" for="segmentations_checkbox">
-          Segmentations
-        </label>
-      </div>
+        <div *ngIf="objetoSessao && (objetoSessao.admin || playground)" class="form-check">
+            <input class="form-check-input" type="checkbox" value=""
+                id="segmentations_checkbox"
+                [(ngModel)]="download_segmentations"
+                [ngModelOptions]="{standalone: true}">
+            <label class="form-check-label" 
+                    for="segmentations_checkbox">
+                Segmentations
+            </label>
+        </div>
 
         <button id="botao_download"
                 type="submit"

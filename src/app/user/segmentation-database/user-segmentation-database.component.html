@@ -5,12 +5,16 @@
 <div class="container">
     <cr-user-nav [heading]="'Your Private Segmentation Collection'"></cr-user-nav>
 
-    <p>
-        Your Private Segmentation Collection. 
+    <p *ngIf="todasImagens.length !== 0">
         Click the image to zoom and have access to cell segmentation tools.
     </p>
 
-    <cr-listar-cards-imagem [todasImagens]="todasImagens"
+    <div class="redirectUploadContainer" *ngIf="todasImagens.length === 0">
+        <p>You do not have registered images yet, click the button below and upload your images.</p>        
+        <button class="btn btn-primary" [routerLink]="['/image/upload']">Upload</button>
+    </div>
+
+    <cr-listar-cards-imagem *ngIf="todasImagens.length !== 0" [todasImagens]="todasImagens"
             [segmentationDatabase]="segmentationDatabase"
             [carregando]="carregando"
             #atualizarPaginacaoViewChild>

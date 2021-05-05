@@ -19,7 +19,7 @@
         are addressed in six classes
         according to <a href="https://screening.iarc.fr/atlasclassifbethesda.php">Bethesda system</a>.
     </p>
-    <p>
+    <p *ngIf="todasImagens.length !== 0">
         Click the image
         to zoom
         and
@@ -27,7 +27,11 @@
         Each image has annotations for some cells.
     </p>
 
-    <cr-listar-cards-imagem [todasImagens]="todasImagens"
+    <div class="nullContainer" *ngIf="todasImagens.length === 0">
+        <p>There are no images to show yet.</p>        
+    </div>
+
+    <cr-listar-cards-imagem *ngIf="todasImagens.length !== 0" [todasImagens]="todasImagens"
             [segmentationDatabase]="segmentationDatabase"
             [carregando]="carregando"
             #atualizarPaginacaoViewChild>

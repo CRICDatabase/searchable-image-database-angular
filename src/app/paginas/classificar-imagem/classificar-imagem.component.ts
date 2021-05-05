@@ -119,7 +119,7 @@ export class ClassificarImagemComponent implements OnInit, OnDestroy {
             .subscribe((params: ParamMap) => {
                 this.id_imagem = Number(params.get("id"));
                 this.obterUmaImagem(this.id_imagem);
-                this.imagem_autor_id = this.imagem.usuario.id;
+                this.imagem_autor_id = this.imagem?.usuario.id;
                 this.schema_sample.name = `CRIC Cervix Classification #${this.id_imagem}`;
             });
 
@@ -531,7 +531,7 @@ export class ClassificarImagemComponent implements OnInit, OnDestroy {
 
                     this.router.navigate(
                         [
-                            "/classification/"
+                            "/user/classification/"
                         ]
                     );
                 },
@@ -613,7 +613,7 @@ export class ClassificarImagemComponent implements OnInit, OnDestroy {
                 );
         }
     }
-
+    
     toggle_augmentation() {
         this.draw_augmentation = !this.draw_augmentation;
         let idx;

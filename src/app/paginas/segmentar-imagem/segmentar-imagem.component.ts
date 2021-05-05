@@ -105,7 +105,7 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
             const id = Number(params.get("id"));
             this.id_imagem = id;
             this.obterUmaImagem(this.id_imagem);
-            this.imagem_autor_id = this.imagem.usuario.id;
+            this.imagem_autor_id = this.imagem?.usuario.id;
             this.schema_sample.name = `CRIC Cervix Segmentation #${this.id_imagem}`;
         });
 
@@ -190,7 +190,7 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
 
                     this.router.navigate(
                         [
-                            "/segmentation/"
+                            "/user/segmentation/"
                         ]
                     );
                 },
@@ -648,6 +648,61 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
         file_a.click();
 
         document.body.removeChild(file_a);
+    }
+
+    toggle_approve_image() {
+        if (this.imagem.classificacao_aprovada) {
+            this.imagemService.unapprove_image(this.id_imagem)
+                .subscribe(
+                    () => {
+                        this.imagem.classificacao_aprovada = false;
+                    },
+                    (err) => {
+                        switch(err.status) {
+
+                            case HttpStatusCode.UNAUTHORIZED:
+                            case HttpStatusCode.BAD_REQUEST:
+                            case HttpStatusCode.NOT_FOUND:
+                            case HttpStatusCode.FORBIDDEN:
+                            case HttpStatusCode.INTERNAL_SERVER_ERROR: {
+                                console.log(err.message);
+                                break;
+                            }
+
+                            default: {
+                                console.log(err);
+                                break;
+                            }
+                        }
+                    }
+                );
+        }
+        else {
+            this.imagemService.approve_image(this.id_imagem)
+                .subscribe(
+                    () => {
+                        this.imagem.classificacao_aprovada = true;
+                    },
+                    (err) => {
+                        switch(err.status) {
+
+                            case HttpStatusCode.UNAUTHORIZED:
+                            case HttpStatusCode.BAD_REQUEST:
+                            case HttpStatusCode.NOT_FOUND:
+                            case HttpStatusCode.FORBIDDEN:
+                            case HttpStatusCode.INTERNAL_SERVER_ERROR: {
+                                console.log(err.message);
+                                break;
+                            }
+
+                            default: {
+                                console.log(err);
+                                break;
+                            }
+                        }
+                    }
+                );
+        }
     }
 
     toggle_augmentation() {
