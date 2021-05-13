@@ -628,7 +628,6 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
             `cric_${this.id_imagem}_segmentation.csv`
         );
     }
-
     
     save_file(data, filename) {
 
