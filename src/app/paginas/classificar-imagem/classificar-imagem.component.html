@@ -161,14 +161,15 @@
                 </button>
             </div>
 
-            <div class="classification_info">
+            <div *ngIf="objetoSessao" class="classification_info">
                 <h5> Support </h5>
                 <dl>
                     <dt>Advise</dt>
                     <dd>Click with the left mouse button on the region you want and then fill in all the information regarding the classification according to the Bethesda system.</dd>
                 </dl>
-                <a [routerLink]="['/about']">Report something</a>
             </div>
+
+            <a [routerLink]="['/about']" class="report">Report something</a>
 
             <cr-image-info [image]="imagem"></cr-image-info>
 

@@ -151,14 +151,15 @@
                 </button>
             </div>
 
-            <div class="segmentation_info">
+            <div *ngIf="objetoSessao" class="segmentation_info">
                 <h5> Support </h5>
                 <dl>
                     <dt>Advise</dt>
                     <dd>Press the mouse on the region of the cytoplasm that you want to target. Keep the mouse pressed until you go around the region. Save the cell description and perform a similar procedure to the nuclei.</dd>
                 </dl>
-                <a [routerLink]="['/about']">Report something</a>
             </div>
+
+            <a [routerLink]="['/about']" class="report">Report something</a>
 
             <cr-image-info [image]="imagem"></cr-image-info>
 
