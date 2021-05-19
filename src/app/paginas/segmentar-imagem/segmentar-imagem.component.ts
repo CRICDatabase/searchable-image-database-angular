@@ -556,6 +556,8 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
     save_json() {
 
         var segmentations_array = [];
+        var segmentations_cytoplasm_array = [];
+        var segmentations_nucleus_array = [];
         
         segmentations_array.push({
             image_id: this.imagem.id,
@@ -589,9 +591,67 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
             )
         });
 
+        segmentations_cytoplasm_array.push({
+            image_id: this.imagem.id,
+            image_doi: this.imagem.doi,
+            image_name: this.imagem.nome,
+            cells: this.todasSegmentacoes.celulas.map(
+                (item) => {
+                    return {
+                        cell_id: item.id,
+                        description_id: item.descricao.id,
+                        cell_name: item.descricao.nome,
+                        cell_code: item.descricao.codigo,
+                        cytoplasm_segmentation: item.segmentos_citoplasma.map(
+                            (cyto_cord) => {
+                                return {
+                                    coord_x: cyto_cord.coord_x,
+                                    coord_y: cyto_cord.coord_y
+                                }
+                            }
+                        ),
+                    };
+                }
+            )
+        });
+
+        segmentations_nucleus_array.push({
+            image_id: this.imagem.id,
+            image_doi: this.imagem.doi,
+            image_name: this.imagem.nome,
+            cells: this.todasSegmentacoes.celulas.map(
+                (item) => {
+                    return {
+                        cell_id: item.id,
+                        description_id: item.descricao.id,
+                        cell_name: item.descricao.nome,
+                        cell_code: item.descricao.codigo,
+                        nucleus_segmentation: item.segmentos_nucleo.map(
+                            (nucle_cord) => {
+                                return {
+                                    coord_x: nucle_cord.coord_x,
+                                    coord_y: nucle_cord.coord_y
+                                }
+                            }
+                        ),
+                    };
+                }
+            )
+        });
+
         this.save_file(
             JSON.stringify(segmentations_array),
             `cric_${this.id_imagem}_segmentation.json`
+        );
+
+        this.save_file(
+            JSON.stringify(segmentations_cytoplasm_array),
+            `cric_${this.id_imagem}_cytoplasm_segmentation.json`
+        );
+
+        this.save_file(
+            JSON.stringify(segmentations_nucleus_array),
+            `cric_${this.id_imagem}_nucleus_segmentation.json`
         );
     }
 
@@ -600,6 +660,8 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
         var segmentation_cytoplasm_csv_string = "image_id,image_doi,image_filename,cell_id,description_id,cell_name,cell_code,cytoplasm_segmentation_x,cytoplasm_segmentation_y,cytoplasm_segmentation_x,cytoplasm_segmentation_y,...\n";
         var segmentation_nucleus_csv_string = "image_id,image_doi,image_filename,cell_id,description_id,cell_name,cell_code,nucleus_segmentation_x,nucleus_segmentation_y,nucleus_segmentation_x,nucleus_segmentation_y,...\n";
         var segmentation_CSV = segmentation_cytoplasm_csv_string + segmentation_nucleus_csv_string;
+        var segmentation_cytoplasm_CSV = segmentation_cytoplasm_csv_string;
+        var segmentation_nucleus_CSV = segmentation_nucleus_csv_string;
         var initial = `${this.imagem.id},${this.imagem.doi},${this.imagem.nome},`;
 
         let cytoplasm_line;
@@ -620,12 +682,24 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
                 ) + "\n";
                 
                 segmentation_CSV = segmentation_CSV + cytoplasm_line + nucleus_line;
+                segmentation_cytoplasm_CSV = segmentation_cytoplasm_CSV + cytoplasm_line;
+                segmentation_nucleus_CSV = segmentation_nucleus_CSV + nucleus_line;
             }
         );
 
         this.save_file(
             segmentation_CSV,
             `cric_${this.id_imagem}_segmentation.csv`
+        );
+
+        this.save_file(
+            segmentation_cytoplasm_CSV,
+            `cric_${this.id_imagem}_cytoplasm_segmentation.csv`
+        );
+
+        this.save_file(
+            segmentation_nucleus_CSV,
+            `cric_${this.id_imagem}_nucleus_segmentation.csv`
         );
     }
     
