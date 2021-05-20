@@ -31,6 +31,7 @@ export class DownloadsComponent implements OnInit, OnDestroy {
     };
 
     public todasImagens: IImagemModelResultado[];
+    public total_imagens: number;
     private comunicacaoApi: ComunicacaoApi;
     private listarImagensSubscription: Subscription;
     private armazenamentoBrowser: ArmazenamentoBrowser;
@@ -55,12 +56,16 @@ export class DownloadsComponent implements OnInit, OnDestroy {
         this.download_images = true;
         this.download_classifications = true;
         this.download_segmentations = false; // Until release segmentation
+        this.todasImagens = null;
+        this.total_imagens = null;
     }
 
     ngOnInit() {
         this.listarImagens();
-        console.log(this.todasImagens);
-     }
+        //this.total_imagens = this.todasImagens.length; 
+        //console.log(this.todasImagens);
+        //console.log(this.total_imagens);
+    }
 
     ngOnDestroy() {
         if (this.listarImagensSubscription) {
@@ -83,33 +88,36 @@ export class DownloadsComponent implements OnInit, OnDestroy {
             .subscribe(
                 (retorno) => {
                     this.todasImagens = this.construirUrlCaminhoImagem(retorno);
+                    this.total_imagens = this.todasImagens.length; 
                     this.carregando = false;
+                    
+                    console.log(this.todasImagens);
+                    console.log(this.total_imagens);
                 },
                 (erro) => {
                     this.carregando = false;
                     this.objetoErro = erro.error;
 
                     switch (this.objetoErro.status) {
+                        case HttpStatusCode.UNAUTHORIZED: {
+                            console.log(this.objetoErro.mensagem);
+                            break;
+                        }
 
-                    case HttpStatusCode.UNAUTHORIZED: {
-                        console.log(this.objetoErro.mensagem);
-                        break;
-                    }
+                        case HttpStatusCode.NOT_FOUND: {
+                            console.log(this.objetoErro.mensagem);
+                            break;
+                        }
 
-                    case HttpStatusCode.NOT_FOUND: {
-                        console.log(this.objetoErro.mensagem);
-                        break;
-                    }
+                        case HttpStatusCode.INTERNAL_SERVER_ERROR: {
+                            console.log(this.objetoErro.mensagem);
+                            break;
+                        }
 
-                    case HttpStatusCode.INTERNAL_SERVER_ERROR: {
-                        console.log(this.objetoErro.mensagem);
-                        break;
-                    }
-
-                    default: {
-                        console.log(erro);
-                        break;
-                    }
+                        default: {
+                            console.log(erro);
+                            break;
+                        }
                     }
                 }
             );
