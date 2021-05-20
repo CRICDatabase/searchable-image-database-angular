@@ -32,6 +32,8 @@ export class DownloadsComponent implements OnInit, OnDestroy {
 
     public todasImagens: IImagemModelResultado[];
     public total_imagens: number;
+    public total_classificao: number;
+    public total_segmentacao: number;
     private comunicacaoApi: ComunicacaoApi;
     private listarImagensSubscription: Subscription;
     private armazenamentoBrowser: ArmazenamentoBrowser;
@@ -58,13 +60,12 @@ export class DownloadsComponent implements OnInit, OnDestroy {
         this.download_segmentations = false; // Until release segmentation
         this.todasImagens = null;
         this.total_imagens = null;
+        this.total_classificao = null;
+        this.total_segmentacao = null;
     }
 
     ngOnInit() {
         this.listarImagens();
-        //this.total_imagens = this.todasImagens.length; 
-        //console.log(this.todasImagens);
-        //console.log(this.total_imagens);
     }
 
     ngOnDestroy() {
@@ -75,6 +76,15 @@ export class DownloadsComponent implements OnInit, OnDestroy {
         if (this.export_collection_subscription) {
             this.export_collection_subscription.unsubscribe();
         }
+    }
+
+    informacoesImagens(imagens){
+        this.total_imagens = imagens.length;
+
+        imagens.forEach((item) => {
+            this.total_classificao += item.total_classificacoes;
+            this.total_segmentacao += item.total_segmentacoes;
+        });
     }
 
     listarImagens() {
@@ -88,11 +98,8 @@ export class DownloadsComponent implements OnInit, OnDestroy {
             .subscribe(
                 (retorno) => {
                     this.todasImagens = this.construirUrlCaminhoImagem(retorno);
-                    this.total_imagens = this.todasImagens.length; 
+                    this.informacoesImagens(this.todasImagens);
                     this.carregando = false;
-                    
-                    console.log(this.todasImagens);
-                    console.log(this.total_imagens);
                 },
                 (erro) => {
                     this.carregando = false;
