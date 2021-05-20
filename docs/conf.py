@@ -22,7 +22,7 @@ copyright = '2020, Center for Recognition and Inspection of Cells (CRIC)'
 author = 'Center for Recognition and Inspection of Cells (CRIC)'
 
 # The full version, including alpha/beta/rc tags
-release = '2.9.6'
+release = '2.10.0'
 
 
 # -- General configuration ---------------------------------------------------
