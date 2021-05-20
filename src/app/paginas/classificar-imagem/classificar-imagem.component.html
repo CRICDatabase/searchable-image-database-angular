@@ -10,7 +10,7 @@
         <div class="col-sm-12 col-md-4 col-lg-3">
             <a class="btn btn-primary collapsed"
                     title="Back to collection"
-                    [routerLink]="['/classification']">
+                    href="javascript: history.go(-1)">
                 <svg width="1em"
                         height="1em"
                         viewBox="0 0 16 16"
@@ -74,7 +74,7 @@
             </button>
 
             <button class="btn btn-primary collapsed"
-                    *ngIf="objetoSessao"
+                    *ngIf="objetoSessao && objetoSessao.admin"
                     [title]="imagem?.classificacao_aprovada ? 'Unapprove image' : 'Approve image'"
                     (click)="toggle_approve_image()">
                 <!-- Bootstrap award fill icon -->
@@ -104,7 +104,7 @@
             <button class="btn btn-danger collapsed"
                     data-toggle="modal"
                     data-target="#delete-image-modal"
-                    *ngIf="objetoSessao && objetoSessao.admin"
+                    *ngIf="objetoSessao && imagem && ((imagem_autor_id == objetoSessao.id_usuario) || objetoSessao.admin)"
                     title="Delete image">
                 <svg width="1em"
                         height="1em"
@@ -160,6 +160,17 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
+            <div *ngIf="objetoSessao" class="classification_info">
+                <h5> Support </h5>
+                <dl>
+                    <dt>Advise</dt>
+                    <dd>Click with the left mouse button on the region you want and then fill in all the information regarding the classification according to the Bethesda system.</dd>
+                </dl>
+            </div>
+
+            <a [routerLink]="['/about']" class="report">Report something</a>
+
             <cr-image-info [image]="imagem"></cr-image-info>
 
             <div class="box_filter">
@@ -208,9 +219,11 @@
                             Federal University of Ouro Preto
                         </dd>
                         -->
-
+                        
+                        <!--
                         <dt>ID</dt>
                         <dd>{{todasClassificacoes[indiceSelecionado]?.id}}</dd>
+                        -->
 
                         <dt>Lesion</dt>
                         <dd>{{todasClassificacoes[indiceSelecionado]?.lesao?.nome}}</dd>

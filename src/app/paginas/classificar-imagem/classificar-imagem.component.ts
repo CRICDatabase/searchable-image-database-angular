@@ -71,6 +71,7 @@ export class ClassificarImagemComponent implements OnInit, OnDestroy {
     public exibirModal: boolean;
     public id_imagem: number;
     public id_lesao: number;
+    public imagem_autor_id: number;
     public imagem: IImagemModelResultado;
     public imagemAtualizacao: ImagemEntidade;
     public indiceSelecionado: number;
@@ -104,6 +105,7 @@ export class ClassificarImagemComponent implements OnInit, OnDestroy {
         this.imagemAtualizacao.lesao = new LesaoEntidade();
         this.draw_label = true;
         this.draw_augmentation = true;
+        this.imagem = null;
     }
 
     ngOnInit() {
@@ -117,7 +119,7 @@ export class ClassificarImagemComponent implements OnInit, OnDestroy {
             .subscribe((params: ParamMap) => {
                 this.id_imagem = Number(params.get("id"));
                 this.obterUmaImagem(this.id_imagem);
-
+                this.imagem_autor_id = this.imagem?.usuario.id;
                 this.schema_sample.name = `CRIC Cervix Classification #${this.id_imagem}`;
             });
 
@@ -174,6 +176,7 @@ export class ClassificarImagemComponent implements OnInit, OnDestroy {
             .subscribe(
                 (retorno) => {
                     this.imagem = retorno;
+                    this.imagem_autor_id = this.imagem.usuario.id;
                     this.caminho_imagem = `${this.comunicacaoApi.getImageURL()}/${this.imagem.nome}`;
 
                     setTimeout(
@@ -528,7 +531,7 @@ export class ClassificarImagemComponent implements OnInit, OnDestroy {
 
                     this.router.navigate(
                         [
-                            "/classification/"
+                            "/user/classification/"
                         ]
                     );
                 },
@@ -610,7 +613,7 @@ export class ClassificarImagemComponent implements OnInit, OnDestroy {
                 );
         }
     }
-
+    
     toggle_augmentation() {
         this.draw_augmentation = !this.draw_augmentation;
         let idx;
@@ -622,7 +625,6 @@ export class ClassificarImagemComponent implements OnInit, OnDestroy {
         else {
             idx = null;
             this.draw_label = false;
-
         }
         
         exibirClassificacoes(this.todasClassificacoes, idx, this.draw_label);

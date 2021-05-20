@@ -5,7 +5,7 @@
 <div class="container">
     <cr-user-nav [heading]="'Your Private Classification Collection'"></cr-user-nav>
 
-    <p>
+    <p *ngIf="todasImagens.length !== 0">
         Click the image
         to zoom
         and
@@ -14,7 +14,12 @@
         which are represented by bounding boxes (100pixels x 100pixels).
     </p>
 
-    <cr-listar-cards-imagem [todasImagens]="todasImagens"
+    <div class="redirectUploadContainer" *ngIf="todasImagens.length === 0">
+        <p>You do not have registered images yet, click the button below and upload your images.</p>        
+        <button class="btn btn-primary" [routerLink]="['/image/upload']">Upload</button>
+    </div>
+
+    <cr-listar-cards-imagem *ngIf="todasImagens.length !== 0" [todasImagens]="todasImagens"
             [classificationDatabase]="classificationDatabase"
             #atualizarPaginacaoViewChild>
     </cr-listar-cards-imagem>

@@ -6,6 +6,7 @@ h5 {
     }
 }
 
+.segmentation_info,
 .image_info,
 .box_filter,
 .box_info {
@@ -29,6 +30,15 @@ h5 {
         }
     }
 
+    dd {
+
+        &::after {
+            content: "";
+            clear: both;
+            display: block;
+        }
+    }
+
     .bd-highlight + .bd-highlight {
         margin-right: 1vw;
     }
@@ -49,4 +59,8 @@ h5 {
     option {
         font-size: 0.9rem;
     }
+}
+
+.report{
+    font-size: 0.9rem;
 }

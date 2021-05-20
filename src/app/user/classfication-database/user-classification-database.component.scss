@@ -1,0 +1,20 @@
+.container{
+  min-height: calc(100vh - (230px + 120px));;
+}
+
+.redirectUploadContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  margin-top: 150px;
+}
+
+.redirectUploadContainer p{
+  align-self: center;
+}
+
+.redirectUploadContainer button{
+  width: 130px;
+  align-self: center;
+}

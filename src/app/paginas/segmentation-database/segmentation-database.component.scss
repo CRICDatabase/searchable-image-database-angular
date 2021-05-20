@@ -1,9 +1,23 @@
 @import '../../../sass/variables';
 
 .container {
+    min-height: calc(100vh - (230px + 120px));
+
     h1 {
         span.beta {
             color: $cric-red;
         }
     }
 }
+
+.nullContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    margin-top: 150px;
+  }
+  
+  .nullContainer p{
+    align-self: center;
+  }

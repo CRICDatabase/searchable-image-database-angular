@@ -66,6 +66,7 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
     public descricao: DescricaoCelulaEntidade;
     public id_descricao: number;
     public id_imagem: number;
+    public imagem_autor_id: number;
     public imagem: IImagemModelResultado;
     public indiceSelecionado: number;
     public indiceSelecionadoPadrao: number;
@@ -77,6 +78,8 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
     public vetorDePontos: any;
     public vetorSelecaoDescricao: Array<IDescricaoModelResultado[]>;
     public playground: boolean;
+    public draw_label: boolean;
+    public draw_augmentation: boolean;
 
     constructor(private imagemService: ImagemService, private activatedRoute: ActivatedRoute, private router: Router) {
         this.playground = environment.playground === "true";
@@ -91,6 +94,9 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
         this.permitirCadastroSegmentacao = false;
         this.SegmentacaoHelper = new SegmentacaoHelper();
         this.vetorSelecaoDescricao = new Array<IDescricaoModelResultado[]>();
+        this.draw_label = true;
+        this.draw_augmentation = true;
+        this.imagem = null;
     }
 
     ngOnInit() {
@@ -98,13 +104,13 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
         this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
             const id = Number(params.get("id"));
             this.id_imagem = id;
-
+            this.obterUmaImagem(this.id_imagem);
+            this.imagem_autor_id = this.imagem?.usuario.id;
             this.schema_sample.name = `CRIC Cervix Segmentation #${this.id_imagem}`;
         });
 
         this.indiceSelecionado = this.indiceSelecionadoPadrao;
         this.objetoSessao = JSON.parse(this.armazenamentoBrowser.obterDadoSessao(ChavesArmazenamentoBrowser.CHAVE_USUARIO_LOGADO));
-        this.obterUmaImagem(this.id_imagem);
         this.obterTodasDescricoes();
         this.vetorDePontos = segmentos;
 
@@ -139,6 +145,7 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
             .subscribe(
                 (retorno) => {
                     this.imagem = retorno;
+                    this.imagem_autor_id = this.imagem.usuario.id;
                     this.caminho_imagem = `${this.comunicacaoApi.getImageURL()}/${this.imagem.nome}`;
                     this.carregando = false;
                     if(this.objetoSessao){
@@ -183,7 +190,7 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
 
                     this.router.navigate(
                         [
-                            "/segmentation/"
+                            "/user/segmentation/"
                         ]
                     );
                 },
@@ -287,7 +294,7 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
             .subscribe(
                 (retorno) => {
                     this.todasSegmentacoes = retorno;
-                    exibirSegmentacoes(this.todasSegmentacoes, this.indiceSelecionado, this.rotulo);
+                    exibirSegmentacoes(this.todasSegmentacoes, this.indiceSelecionado, this.draw_label);
                     this.carregando = false;
                 },
                 (erro) => {
@@ -375,8 +382,8 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
             this.descricao.codigo = this.todasSegmentacoes.celulas[this.indiceSelecionado].descricao.codigo;
             this.descricao.detalhes = "Pegar estes detalhes pelo codigo que gera a arvore de informacoes";
         }
-        this.rotulo = true;
-        exibirSegmentacoes(this.todasSegmentacoes, Number(this.indiceSelecionado), this.rotulo);
+        this.draw_label = true;
+        exibirSegmentacoes(this.todasSegmentacoes, Number(this.indiceSelecionado), this.draw_label);
     }
 
     permitirCadastro(valor: boolean) {
@@ -422,7 +429,7 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
                         this.todasSegmentacoes = retorno;
                         this.listarTodasSegmentacoesDeDeCelula(this.id_imagem, this.objetoSessao.id_usuario);
                         this.indiceSelecionado = -1;
-                        exibirSegmentacoes(this.todasSegmentacoes, this.indiceSelecionado, this.rotulo);
+                        exibirSegmentacoes(this.todasSegmentacoes, this.indiceSelecionado, this.draw_label);
                         this.carregando = false;
                     },
                     (erro) => {
@@ -538,8 +545,8 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
     }
 
     dasabilitarRotulo() {
-        this.rotulo = !this.rotulo;
-        exibirSegmentacoes(this.todasSegmentacoes, this.indiceSelecionado, this.rotulo);
+        this.draw_label = !this.draw_label;
+        exibirSegmentacoes(this.todasSegmentacoes, this.indiceSelecionado, this.draw_label);
     }
 
     save_image() {
@@ -549,6 +556,8 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
     save_json() {
 
         var segmentations_array = [];
+        var segmentations_cytoplasm_array = [];
+        var segmentations_nucleus_array = [];
         
         segmentations_array.push({
             image_id: this.imagem.id,
@@ -582,9 +591,67 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
             )
         });
 
+        segmentations_cytoplasm_array.push({
+            image_id: this.imagem.id,
+            image_doi: this.imagem.doi,
+            image_name: this.imagem.nome,
+            cells: this.todasSegmentacoes.celulas.map(
+                (item) => {
+                    return {
+                        cell_id: item.id,
+                        description_id: item.descricao.id,
+                        cell_name: item.descricao.nome,
+                        cell_code: item.descricao.codigo,
+                        cytoplasm_segmentation: item.segmentos_citoplasma.map(
+                            (cyto_cord) => {
+                                return {
+                                    coord_x: cyto_cord.coord_x,
+                                    coord_y: cyto_cord.coord_y
+                                }
+                            }
+                        ),
+                    };
+                }
+            )
+        });
+
+        segmentations_nucleus_array.push({
+            image_id: this.imagem.id,
+            image_doi: this.imagem.doi,
+            image_name: this.imagem.nome,
+            cells: this.todasSegmentacoes.celulas.map(
+                (item) => {
+                    return {
+                        cell_id: item.id,
+                        description_id: item.descricao.id,
+                        cell_name: item.descricao.nome,
+                        cell_code: item.descricao.codigo,
+                        nucleus_segmentation: item.segmentos_nucleo.map(
+                            (nucle_cord) => {
+                                return {
+                                    coord_x: nucle_cord.coord_x,
+                                    coord_y: nucle_cord.coord_y
+                                }
+                            }
+                        ),
+                    };
+                }
+            )
+        });
+
         this.save_file(
             JSON.stringify(segmentations_array),
             `cric_${this.id_imagem}_segmentation.json`
+        );
+
+        this.save_file(
+            JSON.stringify(segmentations_cytoplasm_array),
+            `cric_${this.id_imagem}_cytoplasm_segmentation.json`
+        );
+
+        this.save_file(
+            JSON.stringify(segmentations_nucleus_array),
+            `cric_${this.id_imagem}_nucleus_segmentation.json`
         );
     }
 
@@ -593,6 +660,8 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
         var segmentation_cytoplasm_csv_string = "image_id,image_doi,image_filename,cell_id,description_id,cell_name,cell_code,cytoplasm_segmentation_x,cytoplasm_segmentation_y,cytoplasm_segmentation_x,cytoplasm_segmentation_y,...\n";
         var segmentation_nucleus_csv_string = "image_id,image_doi,image_filename,cell_id,description_id,cell_name,cell_code,nucleus_segmentation_x,nucleus_segmentation_y,nucleus_segmentation_x,nucleus_segmentation_y,...\n";
         var segmentation_CSV = segmentation_cytoplasm_csv_string + segmentation_nucleus_csv_string;
+        var segmentation_cytoplasm_CSV = segmentation_cytoplasm_csv_string;
+        var segmentation_nucleus_CSV = segmentation_nucleus_csv_string;
         var initial = `${this.imagem.id},${this.imagem.doi},${this.imagem.nome},`;
 
         let cytoplasm_line;
@@ -613,6 +682,8 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
                 ) + "\n";
                 
                 segmentation_CSV = segmentation_CSV + cytoplasm_line + nucleus_line;
+                segmentation_cytoplasm_CSV = segmentation_cytoplasm_CSV + cytoplasm_line;
+                segmentation_nucleus_CSV = segmentation_nucleus_CSV + nucleus_line;
             }
         );
 
@@ -620,8 +691,17 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
             segmentation_CSV,
             `cric_${this.id_imagem}_segmentation.csv`
         );
-    }
 
+        this.save_file(
+            segmentation_cytoplasm_CSV,
+            `cric_${this.id_imagem}_cytoplasm_segmentation.csv`
+        );
+
+        this.save_file(
+            segmentation_nucleus_CSV,
+            `cric_${this.id_imagem}_nucleus_segmentation.csv`
+        );
+    }
     
     save_file(data, filename) {
 
@@ -641,5 +721,83 @@ export class SegmentarImagemComponent implements OnInit, OnDestroy {
         file_a.click();
 
         document.body.removeChild(file_a);
+    }
+
+    toggle_approve_image() {
+        if (this.imagem.classificacao_aprovada) {
+            this.imagemService.unapprove_image(this.id_imagem)
+                .subscribe(
+                    () => {
+                        this.imagem.classificacao_aprovada = false;
+                    },
+                    (err) => {
+                        switch(err.status) {
+
+                            case HttpStatusCode.UNAUTHORIZED:
+                            case HttpStatusCode.BAD_REQUEST:
+                            case HttpStatusCode.NOT_FOUND:
+                            case HttpStatusCode.FORBIDDEN:
+                            case HttpStatusCode.INTERNAL_SERVER_ERROR: {
+                                console.log(err.message);
+                                break;
+                            }
+
+                            default: {
+                                console.log(err);
+                                break;
+                            }
+                        }
+                    }
+                );
+        }
+        else {
+            this.imagemService.approve_image(this.id_imagem)
+                .subscribe(
+                    () => {
+                        this.imagem.classificacao_aprovada = true;
+                    },
+                    (err) => {
+                        switch(err.status) {
+
+                            case HttpStatusCode.UNAUTHORIZED:
+                            case HttpStatusCode.BAD_REQUEST:
+                            case HttpStatusCode.NOT_FOUND:
+                            case HttpStatusCode.FORBIDDEN:
+                            case HttpStatusCode.INTERNAL_SERVER_ERROR: {
+                                console.log(err.message);
+                                break;
+                            }
+
+                            default: {
+                                console.log(err);
+                                break;
+                            }
+                        }
+                    }
+                );
+        }
+    }
+
+    toggle_augmentation() {
+        this.draw_augmentation = !this.draw_augmentation;
+        let idx;
+
+        if (this.draw_augmentation) {
+            idx = this.indiceSelecionado;
+            this.draw_label = true;
+        }
+        else {
+            idx = null;
+            this.draw_label = false;
+        }
+        
+        exibirSegmentacoes(this.todasSegmentacoes, idx, this.draw_label);
+    }
+
+    toggle_label() {
+        if (this.draw_augmentation) {
+            this.draw_label = !this.draw_label;
+            exibirSegmentacoes(this.todasSegmentacoes, this.indiceSelecionado, this.draw_label);
+        }
     }
 }
