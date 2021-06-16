@@ -29,8 +29,11 @@
 
     <h2>CRIC Cervix Cell Classification</h2>
     <form>
-        <p *ngIf="todasImagens === null"><b>...</b> images (with <b>...</b> cells) from microscope slides of the uterine cervix using the conventional smear (Pap smear) and the epithelial cell abnormalities classified  according to Bethesda system.</p>
-        <p *ngIf="todasImagens !== null"><b>{{total_imagens}}</b> images (with <b>{{total_classificao}}</b> cells) from microscope slides of the uterine cervix using the conventional smear (Pap smear) and the epithelial cell abnormalities classified  according to Bethesda system.</p>
+        <!--
+            <p *ngIf="todasImagens === null"><b>...</b> images (with <b>...</b> cells) from microscope slides of the uterine cervix using the conventional smear (Pap smear) and the epithelial cell abnormalities classified  according to Bethesda system.</p>
+            <p *ngIf="todasImagens !== null"><b>{{total_imagens}}</b> images (with <b>{{total_classificao}}</b> cells) from microscope slides of the uterine cervix using the conventional smear (Pap smear) and the epithelial cell abnormalities classified  according to Bethesda system.</p>
+        -->
+        <p><b>400</b> images (with <b>11534</b> cells) from microscope slides of the uterine cervix using the conventional smear (Pap smear) and the epithelial cell abnormalities classified  according to Bethesda system.</p>
         <p>The cells in the CRIC Cervix Classification collection are labeled in six (6) classes: negative for intraepithelial lesion or malignancy (NILM); atypical squamous cells of undetermined significance, possibly non-neoplastic (ASC-US); low-grade squamous cell carcinoma (SCC) intraepithelial lesion (LSIL); atypical squamous cells, cannot exclude a high-grade lesion (ASC-H); high-grade squamous intraepithelial lesion (HSIL); and squamous carcinoma (SC).</p>
         <div class="form-group row">
             <label for="collection_select"

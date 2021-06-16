@@ -68,13 +68,16 @@
                             (click)="sign_in()">
                         Login
                     </button>
+                    <!--
+                        <button class="btn btn-link"
+                                name="action"
+                                (click)="ask2reset_password()">
+                            Forgot password
+                        </button>
+                    -->
                     <button class="btn btn-link"
                             name="action"
-                            (click)="ask2reset_password()">
-                        Forgot password
-                    </button>
-                    <button class="btn btn-link"
-                            name="action"
+                            *ngIf="playground"
                             (click)="ask2sign_up()">
                         Sign Up
                     </button>
