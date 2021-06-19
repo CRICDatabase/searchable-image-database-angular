@@ -156,6 +156,11 @@ export class DownloadsComponent implements OnInit, OnDestroy {
             this.downloadClassification("https://firebasestorage.googleapis.com/v0/b/cric-files.appspot.com/o/classificationDownload.zip?alt=media&token=76f8fd9a-2d91-4153-9b3a-69b517ab4761", "classifications");
         }
 
+        if(!this.download_images && !this.download_segmentations/* && !this.download_classifications*/){
+            this.carregando = false;
+            return;
+        }
+
         this.export_collection_subscription =
         this.imagemServico.export_collection(
             this.collection2download,
