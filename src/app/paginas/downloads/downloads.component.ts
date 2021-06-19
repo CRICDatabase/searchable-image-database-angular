@@ -140,14 +140,27 @@ export class DownloadsComponent implements OnInit, OnDestroy {
         return listaImagens;
     }
 
+    downloadClassification(fileUrl: string, fileName: string) {
+        var a = document.createElement("a");
+        a.href = fileUrl;
+        a.setAttribute("download", fileName);
+        a.click();
+    }
+      
     solicitarDownloadImagens() {
 
         this.carregando = true;
+
+        //Remove it after fixing classification bug
+        if(this.download_classifications){
+            this.downloadClassification("https://firebasestorage.googleapis.com/v0/b/cric-files.appspot.com/o/classificationDownload.zip?alt=media&token=76f8fd9a-2d91-4153-9b3a-69b517ab4761", "classifications");
+        }
+
         this.export_collection_subscription =
         this.imagemServico.export_collection(
             this.collection2download,
             this.download_images,
-            this.download_classifications,
+            this.download_classifications = false,
             this.download_segmentations
         )
             .subscribe(

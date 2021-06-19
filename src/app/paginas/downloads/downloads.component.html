@@ -98,7 +98,8 @@
             <span *ngIf="carregando">
                 Creating zip file
             </span>
-            <span *ngIf="carregando"
+            <!-- Change to "carregando" when fix classifications bug -->
+            <span *ngIf="carregando outros arquivos"
                     class="spinner-border spinner-border-sm"
                     role="status"
                     aria-hidden="true"></span>
@@ -113,8 +114,8 @@
         <p>[1] A deep learning ensemble method to assist cytopathologists in the Pap test images classification - Débora N. Diniz, Mariana T. Rezende, Andrea G. C. Bianchi, Claudia M.Carneiro, Eduardo J. S. Luz, Gladston J. P. Moreira, Daniela M. Ushizima, Fátima N. S. de Medeiros, and Marcone J. F. Souza, submitted to Journal of Imaging in March 2021.</p>
         <button class="btn btn-primary">
             <!-- The file in question was hosted on firebase using CRIC data (gmail credentials). -->
-            <a href="https://firebasestorage.googleapis.com/v0/b/cric-files.appspot.com/o/Base.rar?alt=media&token=355c7e9c-2ec0-4660-a203-d4c997b17bde" download="BaseData.rar">Start Download</a>
-        </button>
+            <a href="https://firebasestorage.googleapis.com/v0/b/cric-files.appspot.com/o/Base.rar?alt=media&token=355c7e9c-2ec0-4660-a203-d4c997b17bde" download="baseData.rar">Start Download</a>
+        </button> 
     </form>
 
     <cr-cite-us></cr-cite-us>
