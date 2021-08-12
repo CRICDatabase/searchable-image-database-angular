@@ -15,6 +15,7 @@ import { ClassificarImagemComponent } from "./paginas/classificar-imagem/classif
 import { PrivacyComponent } from "./paginas/privacy/privacy.component";
 import { TermsComponent } from "./paginas/terms/terms.component";
 import { UploadImageComponent } from "./paginas/upload-image/upload-image.component";
+import { TutorialComponent } from "./paginas/tutorial/tutorial.component";
 
 import user_routes from "./user/routing";
 import admin_routes from "./admin/routing";
@@ -24,6 +25,7 @@ const routes: Routes = [
     {path: "privacy", component: PrivacyComponent},
     {path: "terms", component: TermsComponent},
     {path: "about", component: AboutComponent},
+    {path: "tutorial", component: TutorialComponent},
     {path: "segmentation", component: SegmentationDatabaseComponent},
     {path: "segmentation/image/:id", component: SegmentarImagemComponent},
     {path: "classification", component: ClassificationDatabaseComponent},

@@ -10,6 +10,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
 import { AboutComponent } from "./paginas/about/about.component";
+import { TutorialComponent } from "./paginas/tutorial/tutorial.component";
 import { ClassificarImagemComponent } from "./paginas/classificar-imagem/classificar-imagem.component";
 import { ClassificationDatabaseComponent } from "./paginas/classification-database/classification-database.component";
 import { DownloadsComponent } from "./paginas/downloads/downloads.component";
@@ -57,6 +58,7 @@ import { AdminInjuryComponent } from './admin/injury/admin-injury.component';
         HeaderComponent,
         FooterComponent,
         AboutComponent,
+        TutorialComponent,
         SegmentationDatabaseComponent,
         ClassificationDatabaseComponent,
         DownloadsComponent,
