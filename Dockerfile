@@ -9,13 +9,13 @@ ENV PATH /opt/cric/frontend/node_modules/.bin:$PATH
 # Expose port. Otherwise, we will have "This site can’t be reached"
 # https://stackoverflow.com/a/46779529
 EXPOSE 4200
-LABEL   version="2.10.4-base" \
+LABEL   version="2.10.5-base" \
         description="Frontend in Angular for CRIC Searchable Image Database" \
         maintainer="raniere@rgaiacs.com"
 
 FROM base as development
 RUN npm install && npm cache clean --force
-LABEL   version="2.10.4-development"
+LABEL   version="2.10.5-development"
 
 FROM development as builder
 ARG CRIC_DOMAIN="https://database.cric.com.br"
@@ -24,7 +24,7 @@ ARG CRIC_EMAIL="cric@ufop.edu.br"
 ARG CRIC_PLAYGROUND=false
 COPY . ./
 RUN ng build --prod --build-optimizer
-LABEL   version="2.10.4-builder"
+LABEL   version="2.10.5-builder"
 
 # Build a small nginx image with static website
 FROM nginx:alpine as production
