@@ -35,6 +35,8 @@
         -->
         <p><b>400</b> images (with <b>11534</b> cells) from microscope slides of the uterine cervix using the conventional smear (Pap smear) and the epithelial cell abnormalities classified  according to Bethesda system.</p>
         <p>The cells in the CRIC Cervix Classification collection are labeled in six (6) classes: negative for intraepithelial lesion or malignancy (NILM); atypical squamous cells of undetermined significance, possibly non-neoplastic (ASC-US); low-grade squamous cell carcinoma (SCC) intraepithelial lesion (LSIL); atypical squamous cells, cannot exclude a high-grade lesion (ASC-H); high-grade squamous intraepithelial lesion (HSIL); and squamous carcinoma (SC).</p>
+        <p>[1] <a href="https://www.nature.com/articles/s41597-021-00933-8">Cric searchable image database as a public platform for conventional pap smear cytology data</a> 
+            - Mariana T. Rezende, Raniere Silva, Fagner de O. Bernardo, Alessandra H. G. Tobias, Paulo H. C. Oliveira, Tales M. Machado, Caio S. Costa, Fatima N. S. Medeiros, Daniela M. Ushizima, Claudia M. Carneiro and Andrea G. C. Bianchi, published in the Nature in June 2021.</p>
         <div class="form-group row">
             <label for="collection_select"
                     class="col-sm-2 col-form-label">Collection</label>
@@ -110,8 +112,9 @@
     <form>
         <p>The CRIC Cervical Cell Classification – Cropped Image (CRIC- CI) was designed to push state of the art in cervical cell classification using cropped patches around nuclei for machine learning algorithm. 
            The database is part of the Cervix Cell classification collection, the bounding boxes of 90 x 90 pixels around nuclei were chosen from different classes. 
-           This dataset divides cells into two more group classes: two class groups and three class groups [1].</p>        
+           This dataset divides cells into (3) three group classes: two class, three classes and six class groups [1].</p>        
         <p>[1] <a href="https://www.mdpi.com/2313-433X/7/7/111">A deep learning ensemble method to assist cytopathologists in the Pap test images classification</a> - Débora N. Diniz, Mariana T. Rezende, Andrea G. C. Bianchi, Claudia M.Carneiro, Eduardo J. S. Luz, Gladston J. P. Moreira, Daniela M. Ushizima, Fátima N. S. de Medeiros, and Marcone J. F. Souza, published in the Journal of Imaging in July 2021.</p>
+        <p>The code from the above article can be found on the GitHub versioning system: <a href="https://github.com/debnasser/deep-learning-ensemble-jimaging/blob/main/balance.py">https://github.com/debnasser/deep-learning-ensemble-jimaging/blob/main/balance.py</a>.</p>
         <button class="btn btn-primary">
             <!-- The file in question was hosted on firebase using CRIC data (gmail credentials). -->
             <a href="https://firebasestorage.googleapis.com/v0/b/cric-files.appspot.com/o/Base.rar?alt=media&token=355c7e9c-2ec0-4660-a203-d4c997b17bde" download="baseData.rar">Start Download</a>
