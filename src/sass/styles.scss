@@ -10,16 +10,16 @@ body{
 
 header{
     position: relative;
-    background-color: $background-white;
+    background-color: $cric-blue;
     top: 0px;
-    box-shadow: 5px 0px 4px $background-shadow;
+    box-shadow: 5px 0px 4px $cric-blue;
 }
 
 footer{
     padding: 0.75rem 1.25rem 0.75rem 1.25rem;
     position: relative;
-    background-color: $cric-blue;
-    box-shadow: 0px 0px 5px $cric-blue;
+    background-color: $background-white;
+    box-shadow: 0px 0px 5px $background-shadow;
 }
 
 ul{

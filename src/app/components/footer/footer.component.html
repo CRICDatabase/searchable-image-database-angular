@@ -1,60 +1,60 @@
 <footer>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-6 col-md-4 col-lg-4">
-                <a class="nav-link-footer nav-link navbar-brand"
-                        [routerLink]="['/']">
-                    <img class="img-responsive logoIndexFooter"
-                            src="./assets/img/logo/cric_horizontal_white.png"
-                            alt="Logotipo - Center for Recognition and Inspection of Cells">
-                </a>
-            </div>
-            <div class="col-sm-3 col-md-4 col-lg-4">
-                <p class="university"> <a class="nav-link-footer"
-                            [href]="linkUFOP"
-                            target="_blank"> Federal University of Ouro Preto (UFOP) </a> </p>
-            </div>
-
-            <div class="col-sm-3 col-md-4 col-lg-4">
-                <p> <a class="nav-link-footer"
-                            [routerLink]="['/about']"> About us </a> </p>
-                <p> <a class="nav-link-footer"
-                            [routerLink]="['/about']"
-                            fragment="cite-us"> Cite us </a> </p>
+        <div class="row justify-content-end">
+            <div class="col-sm-3 order-sm-4 col-md-2 col-lg-1 order-lg-1   order-4">
+                <p> <a class="nav-link-footer" [routerLink]="['/about']"> About us </a> </p>
+                <p> <a class="nav-link-footer" [routerLink]="['/about']" fragment="cite-us"> Cite us </a> </p>
                 <p>
-                    <a class="nav-link-footer"
-                            [routerLink]="['/privacy']">
+                    <a class="nav-link-footer" [routerLink]="['/privacy']">
                         Privacy Policy
                     </a>
                 </p>
+            </div>
+            <div class="col-sm-3 order-sm-6 col-md-3 col-lg-2 order-lg-2 order-5 order-md-5">
                 <p>
-                    <a class="nav-link-footer"
-                            [routerLink]="['/terms']">
+                    <a class="nav-link-footer" [routerLink]="['/terms']">
                         Terms & Conditions
                     </a>
                 </p>
-                <p> <a class="nav-link-footer"
-                            href="mailto:{{contact_us_email}}"> Contact us </a> </p>
+                <p> <a class="nav-link-footer" href="mailto:{{contact_us_email}}"> Contact us </a> </p>
+            </div>
+
+            <div class="col-lg-5 order-sm-9 description order-10">
+                <p>
+                    CRIC Searchable Image Database is released under
+                    the <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">AGPL</a>.
+                    <a href="https://github.com/CRICDatabase/searchable-image-database">Source code</a> available.
+                    Except where otherwise noted,
+                    content on this site is licensed under
+                    a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+                        International license</a>.
+                </p>
+                <p>
+                    ©2020 Federal University of Ouro Preto (UFOP)
+                    on behalf of
+                    the Center for Recognition and Inspection of Cells.
+                </p>
+                <p class="university"> <a class="nav-link-footer" [href]="linkUFOP" target="_blank"> Federal University
+                        of Ouro Preto (UFOP) </a> </p>
+
+            </div>
+            <div class="col order-sm-1 col-lg-2  order-lg-10 order-1">
+                <a class="nav-link-footer nav-link navbar-brand" [routerLink]="['/']">
+                    <img class="img-responsive logoIndexFooter" src="./assets/img/logo/cric_horizontal_color.png"
+                        alt="Logotipo - Center for Recognition and Inspection of Cells">
+                </a>
+            </div>
+
+            <div class="col order-sm-2 col-lg-2 order-lg-12 order-2">
+                <a class="nav-link-footer nav-link navbar-brand" href="https://ufop.br/">
+                    <img class="img-responsive image-ufop" src="./assets/img/logo/ufop.png"
+                        alt="Logotipo - Federal University of Ouro Preto (UFOP) ">
+                </a>
             </div>
 
         </div>
 
-        <div class="row">
-            <p>
-                CRIC Searchable Image Database is released under
-                the <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">AGPL</a>.
-                <a href="https://github.com/CRICDatabase/searchable-image-database">Source code</a> available.
-            </p>
-            <p>
-                Except where otherwise noted,
-                content on this site is licensed under
-                a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International license</a>.
-            </p>
-            <p>
-                ©2020 Federal University of Ouro Preto (UFOP)
-                on behalf of
-                the Center for Recognition and Inspection of Cells.
-            </p>
-        </div>
+
+
     </div>
 </footer>
