@@ -1,6 +1,6 @@
 footer {
     margin-top: 1vh;
-    color: #fafafa;
+    color: #7d7d7d;
 
     p{
         color: inherit;
@@ -16,7 +16,65 @@ footer {
 
     img.logoIndexFooter{
         width: 250px;
-        margin-left: 2vw;
+    }
+
+    img.image-ufop{
+        width: 68px;
+    }
+
+    .container-fluid{
+        padding: 40px;
+    }
+    
+    .container-fluid .university{
+        text-align: center;
+        padding-top: 20px;
+    }
+    
+    .container-fluid .description{
+        margin-top: 20px;
+    }
+}
+
+@media (min-width: 100px) { 
+
+    img.logoIndexFooter{
+        padding-top: 4vh;
+        max-width: 150px;
+        margin-left: -50px;
+    }
+
+    img.image-ufop{
+        max-width: 48px;
+        margin-left: 30px;
+    }
+}
+
+@media (min-width: 281px) { 
+
+    img.logoIndexFooter{
+        padding-top: 4vh;
+        max-width: 150px;
+        margin-left: -20px;
+    }
+
+    img.image-ufop{
+        max-width: 48px;
+        margin-left: 30px;
+    }
+}
+
+@media (min-width: 377px) { 
+
+    img.logoIndexFooter{
+        padding-top: 4vh;
+        max-width: 180px;
+        margin-left: 10px;
+    }
+
+    img.image-ufop{
+        max-width: 58px;
+        margin-left: 40px;
     }
 }
 
@@ -24,7 +82,14 @@ footer {
 @media (min-width: 576px) { 
 
     img.logoIndexFooter{
-        padding-top: 5vh;
+        padding-top: 3vh;
+        max-width: 160px;
+        margin-left: -20px;
+    }
+
+    img.image-ufop{
+        max-width: 58px;
+        margin-left: 20px;
     }
 }
 
@@ -33,6 +98,12 @@ footer {
 
     img.logoIndexFooter{
         padding-top: 2vh;
+        max-width: 180px;
+    }
+
+    img.image-ufop{
+        max-width: 58px;
+        margin-left: -20px;
     }
 }
 
@@ -41,7 +112,12 @@ footer {
 
     img.logoIndexFooter{
         padding-top: 2vh;
-        max-width: 200px;
+        max-width: 180px;
+    }
+
+    img.image-ufop{
+        max-width: 58px;
+        margin-left: 30px;
     }
 }
 
@@ -50,7 +126,11 @@ footer {
 
     img.logoIndexFooter{
         padding-top: 2vh;
-        max-width: 200px;
+        max-width: 180px;
+    }
+
+    img.image-ufop{
+        max-width: 58px;
     }
 }
 
@@ -58,5 +138,10 @@ footer {
 
     img.logoIndexFooter{
         padding-top: 2vh;
+        max-width: 200px;
+    }
+
+    img.image-ufop{
+        max-width: 68px;
     }
 }
