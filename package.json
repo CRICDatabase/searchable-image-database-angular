@@ -47,7 +47,7 @@
     "install": "^0.13.0",
     "jquery": "^3.5.1",
     "normalize.css": "^8.0.1",
-    "npm": "^6.14.5",
+    "npm": "^9.4.1",
     "popper": "^1.0.1",
     "rxjs": "~6.5.3",
     "tslib": "^1.10.0",
@@ -56,7 +56,7 @@
   "devDependencies": {
     "@angular-builders/custom-webpack": "^9.2.0",
     "@angular-devkit/build-angular": "~0.901.4",
-    "@angular/cli": "~9.1.4",
+    "@angular/cli": "~15.1.4",
     "@angular/compiler-cli": "~9.1.4",
     "@angular/language-service": "~9.1.4",
     "@types/jasmine": "~3.3.8",
