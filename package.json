@@ -43,7 +43,7 @@
     "@ngx-lite/json-ld": "^0.6.2",
     "bootstrap": "^4.5.0",
     "file-saver": "^2.0.2",
-    "highcharts": "^8.0.0",
+    "highcharts": "^9.0.0",
     "install": "^0.13.0",
     "jquery": "^3.5.1",
     "normalize.css": "^8.0.1",
